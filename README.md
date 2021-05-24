@@ -1,8 +1,6 @@
-# Credence App
+# Rewards App
 
-Web application for Credence system that allows teams to share sensitive files such as configuration information, credentials, etc.
-
-Please also note the Web API that it uses: https://github.com/ISS-Security/credence-api
+This is the web application of Rewards made in Ruby + Slim
 
 ## Install
 
@@ -11,10 +9,6 @@ Install this application by cloning the *relevant branch* and use bundler to ins
 ```shell
 bundle install
 ```
-
-## Test
-
-This web app does not contain any tests yet :(
 
 ## Execute
 
