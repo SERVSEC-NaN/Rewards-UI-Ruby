@@ -10,7 +10,7 @@ class SecureMessage
   end
 
   def self.generate_key
-  endoded_random_bytes(RbNaCl::SecretBox.key_bytes)
+    encoded_random_bytes(RbNaCl::SecretBox.key_bytes)
   end
 
   def self.setup(msg_key)

@@ -34,7 +34,7 @@ module Rewards
       routing.on 'logout' do
         routing.get do
           SecureSession.new(session).delete(:current_account)
-          flash[:notice] = "Logged out successfully"
+          flash[:notice] = 'Logged out successfully'
           routing.redirect @login_route
         end
       end

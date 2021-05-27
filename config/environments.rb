@@ -6,6 +6,9 @@ require 'logger'
 require 'rack/ssl-enforcer'
 require 'rack/session/redis'
 
+require_relative '../require_app'
+require_app('lib')
+
 module Rewards
   # Configuration for the API
   class App < Roda
@@ -23,15 +26,24 @@ module Rewards
     LOGGER = Logger.new($stderr)
     def self.logger() = LOGGER
 
+    ONE_MONTH = 30 * 24 * 60 * 60
+
+    configure do
+      SecureSession.setup(ENV['REDIS_URL']) # REDIS_URL used again below
+      SecureMessage.setup(ENV.delete('MSG_KEY'))
+    end
+
     configure :production do
       use Rack::SslEnforce, hsts: true
       use Rack::Session::Redis,
-        :redis_server => "",
-        :expires_in => 30 * 24 * 60 * 60 # one month
+          expire_after: ONE_MONTH,
+          redis_server: ENV.delete('REDIS_URL')
     end
 
     configure :development, :test do
       require 'pry'
+
+      use Rack::Session::Pool, expire_after: ONE_MONTH
 
       # Allows running reload! in pry to restart entire app
       def self.reload!

@@ -10,3 +10,8 @@ include Rack::Test::Methods # rubocop:disable Style/MixinUsage
 def app
   Rewards::App
 end
+
+unless app.environment == :production
+  require 'rack/test'
+  include Rack::Test::Methods # rubocop:disable Style/MixinUsage
+end
