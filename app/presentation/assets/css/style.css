@@ -1,5 +1,38 @@
+@import url("https://fonts.googleapis.com/css2?family=Arvo:wght@700&display=swap");
+
+:root {
+  --primary-color: rgb(0, 133, 46);
+}
+
 .force-wrap {
-  word-wrap:break-word;
-  width:100%;
-  display:block;
+  word-wrap: break-word;
+  width: 100%;
+  display: block;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.title {
+  color: var(--primary-color);
+  font-family: Arvo, sans-serif;
+}
+
+.start {
+  text-decoration: none;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  border-radius: 20px;
+  background: white;
+  cursor: pointer;
+  width: 250px;
+  padding: 0.75rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.start:hover {
+  color: white;
+  background-color: var(--primary-color);
 }

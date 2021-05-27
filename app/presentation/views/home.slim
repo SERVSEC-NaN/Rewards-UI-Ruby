@@ -1,6 +1,7 @@
-h1 class="mt-5" Rewards
-p Your attention is valueable
+div class="text-center "
+  h1 class="mb-0 display-1 title" Reward$
+  p class="h4 mb-5" style="color: grey;" Your attention is valueable
 
-- unless current_account
-  p 
-    a href='/auth/login' LOGIN HERE!
+  - unless current_account
+    p 
+      a class="h4 start" href='/auth/login' Get Started
