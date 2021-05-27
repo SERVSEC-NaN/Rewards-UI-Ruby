@@ -27,6 +27,7 @@ class SecureSession
 
   def get(key)
     return nil unless @session[key]
+
     SecureMessage.decrypt(@session[key])
   end
 

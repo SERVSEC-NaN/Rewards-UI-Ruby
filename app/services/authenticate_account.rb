@@ -13,7 +13,7 @@ module Rewards
 
     def call(username:, password:)
       response = HTTP.post(
-        "#{@config.API_URL}/auth/authenticate", 
+        "#{@config.API_URL}/auth/authenticate",
         json: { username: username, password: password }
       )
 
