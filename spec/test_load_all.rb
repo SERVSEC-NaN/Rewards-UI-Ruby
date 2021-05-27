@@ -8,5 +8,5 @@ require 'rack/test'
 include Rack::Test::Methods # rubocop:disable Style/MixinUsage
 
 def app
-  Credence::App
+  Rewards::App
 end
