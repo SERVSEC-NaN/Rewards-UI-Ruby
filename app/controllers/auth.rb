@@ -18,12 +18,13 @@ module Rewards
         routing.post do
           account = AuthenticateAccount.new(App.config).call(
             username: routing.params['username'],
-            password: routing.params['password'])
+            password: routing.params['password']
+          )
 
           session[:current_account] = account
           flash[:notice] = "Welcome back #{account['username']}!"
           routing.redirect '/'
-        rescue StandardError
+        rescue AuthenticateAccount::UnauthorizedError
           flash[:error] = 'Username and password did not match our records'
           routing.redirect @login_route
         end
