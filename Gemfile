@@ -14,10 +14,15 @@ gem 'rake'
 # Debugging
 gem 'pry'
 
+# Cookies
+gem 'redis'
+gem 'redis-rack'
+
 # Communication
 gem 'http'
 
 # Security
+gem 'rack-ssl-enforcer'
 gem 'rbnacl' # assumes libsodium package already installed
 
 # Development

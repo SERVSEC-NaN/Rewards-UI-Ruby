@@ -3,6 +3,8 @@
 require 'roda'
 require 'figaro'
 require 'logger'
+require 'rack/ssl-enforcer'
+require 'rack/session/redis'
 
 module Rewards
   # Configuration for the API
@@ -20,6 +22,13 @@ module Rewards
     # Logger setup
     LOGGER = Logger.new($stderr)
     def self.logger() = LOGGER
+
+    configure :production do
+      use Rack::SslEnforce, hsts: true
+      use Rack::Session::Redis,
+        :redis_server => "",
+        :expires_in => 30 * 24 * 60 * 60 # one month
+    end
 
     configure :development, :test do
       require 'pry'
