@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
+ruby File.read('.ruby-version').strip
 
 # Web
 gem 'puma'
@@ -25,13 +26,9 @@ gem 'http'
 gem 'rack-ssl-enforcer'
 gem 'rbnacl' # assumes libsodium package already installed
 
-# Development
-group :development do
+group :development, :test do
   gem 'rubocop'
   gem 'rubocop-performance'
-end
-
-group :development, :test do
   gem 'rack-test'
   gem 'rerun'
 end
