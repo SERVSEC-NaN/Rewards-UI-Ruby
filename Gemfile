@@ -4,23 +4,22 @@ source 'https://rubygems.org'
 ruby File.read('.ruby-version').strip
 
 # Web
-gem 'puma'
+gem 'puma', '~> 5.3.1'
 gem 'roda'
 gem 'slim'
+
+# Debugging
+gem 'pry'
+gem 'rack-test'
 
 # Configuration
 gem 'figaro'
 gem 'rake'
 
-# Debugging
-gem 'pry'
-
-# Cookies
-gem 'redis'
-gem 'redis-rack'
-
 # Communication
 gem 'http'
+gem 'redis'
+gem 'redis-rack'
 
 # Security
 gem 'rack-ssl-enforcer'
