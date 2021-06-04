@@ -34,7 +34,7 @@ module Rewards
     end
 
     configure :production do
-      use Rack::SslEnforce, hsts: true
+      use Rack::SslEnforcer, hsts: true
       use Rack::Session::Redis,
           expire_after: ONE_MONTH,
           redis_server: ENV.delete('REDIS_URL')
