@@ -9,9 +9,9 @@ module Rewards
     route('auth') do |routing|
       @login_route = '/auth/admin/login'
       routing.is 'admin/login' do
-        # GET /auth/logina
+        # GET /auth/login
         routing.get do
-          view :login
+          view :home
         end
 
         # POST /auth/admin/login
