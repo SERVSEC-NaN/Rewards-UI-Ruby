@@ -37,7 +37,10 @@ module Rewards
       use Rack::SslEnforcer, hsts: true
       use Rack::Session::Redis,
           expire_after: ONE_MONTH,
-          redis_server: ENV.delete('REDIS_URL')
+          redis_server: {
+            url: ENV.delete('REDIS_URL'),
+            ssl_params: { verify_mode: OpenSSL::SSL::VERIFY_NONE },
+          }
     end
 
     configure :development, :test do
