@@ -31,6 +31,8 @@ module Rewards
         end
       end
 
+      # /auth/logout
+      @logout_route = '/auth/logout'
       routing.on 'logout' do
         routing.get do
           SecureSession.new(session).delete(:current_account)
