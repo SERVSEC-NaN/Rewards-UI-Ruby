@@ -11,10 +11,10 @@ module Rewards
       @config = config
     end
 
-    def call(username:, password:)
+    def call(email:, password:)
       response = HTTP.post(
         "#{@config.API_URL}/auth/authenticate",
-        json: { username: username, password: password }
+        json: { email: email, password: password }
       )
 
       raise(UnauthorizedError) unless response.code == 200

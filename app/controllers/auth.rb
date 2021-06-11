@@ -7,8 +7,8 @@ module Rewards
   # Web controller for Rewards API
   class App < Roda
     route('auth') do |routing|
-      @login_route = '/auth/admin/login'
-      routing.is 'admin/login' do
+      @login_route = '/auth/login'
+      routing.is 'login' do
         # GET /auth/login
         routing.get do
           view :home
@@ -17,14 +17,14 @@ module Rewards
         # POST /auth/admin/login
         routing.post do
           account = AuthenticateAccount.new(App.config).call(
-            username: routing.params['username'],
+            email: routing.params['email'],
             password: routing.params['password']
           )
           SecureSession.new(session).set(:current_account, account)
-          flash[:notice] = "Welcome back #{account['username']}!"
+          flash[:notice] = "Welcome back #{account['email']}!"
           routing.redirect '/'
         rescue AuthenticateAccount::UnauthorizedError
-          flash[:error] = 'Username and password did not match our records'
+          flash[:error] = 'Email and password did not match our records'
           response.status = 403
           routing.redirect @login_route
         end
@@ -32,11 +32,46 @@ module Rewards
 
       # /auth/logout
       @logout_route = '/auth/admin/logout'
-      routing.on 'admin/logout' do
+      routing.on 'logout' do
         routing.get do
           SecureSession.new(session).delete(:current_account)
           flash[:notice] = 'Logged out successfully'
           routing.redirect @login_route
+        end
+      end
+
+      @register_route = '/auth/register'
+      routing.on 'register' do
+        routing.is do
+          # GET /auth/register
+          routing.get do
+            view :register
+          end
+
+          # POST /auth/register
+          routing.post do
+            account_data = JsonRequestBody.symbolize(routing.params)
+            VerifyRegistration.new(App.config).call(account_data)
+
+            flash[:notice] = 'Please check your email for a verification link'
+            routing.redirect '/'
+          rescue StandardError => e
+            puts "ERROR VERIFYING REGISTRATION: #{e.inspect}"
+            flash[:error] = 'Registration details are not valid'
+            routing.redirect @register_route
+          end
+        end
+
+        # GET /auth/register/<token>
+        routing.get(String) do |registration_token|
+          # verify register token expire or not
+          new_account = RegisterToken.payload(registration_token)
+          flash.now[:notice] = 'Email Verified! Please choose a new password'
+          view :register_confirm, locals: { new_account: new_account, registration_token: registration_token }
+        rescue RegisterToken::ExpiredTokenError
+          flash[:error] = 'The register token has expired, please register again.'
+          response.status = 403
+          routing.redirect @register_route
         end
       end
     end
