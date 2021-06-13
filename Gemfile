@@ -28,6 +28,5 @@ gem 'rbnacl' # assumes libsodium package already installed
 group :development, :test do
   gem 'rubocop'
   gem 'rubocop-performance'
-  gem 'rack-test'
   gem 'rerun'
 end
