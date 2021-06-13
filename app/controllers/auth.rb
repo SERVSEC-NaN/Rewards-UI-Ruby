@@ -7,8 +7,13 @@ module Rewards
   # Web controller for Rewards API
   class App < Roda
     route('auth') do |routing|
+<<<<<<< Updated upstream
       @login_route = '/auth/login'
       routing.is 'login' do
+=======
+      @login_route = '/auth/admin/login'
+      routing.is 'admin/login' do
+>>>>>>> Stashed changes
         # GET /auth/login
         routing.get do
           view :home

@@ -31,12 +31,12 @@ end
 namespace :generate do
   desc 'Create rbnacl key'
   task :msg_key => :lib do
-    puts "New MSG_KEY (base64): #{SecureMessage.generate_key}"
+    puts "MSG_KEY: #{SecureMessage.generate_key}"
   end
 
   desc 'Create cookie secret'
   task :session_secret => :lib do
-    puts "New SESSION_SECRET (base64): #{SecureSession.generate_secret}"
+    puts "SESSION_SECRET: #{SecureSession.generate_secret}"
   end
 end
 
