@@ -26,7 +26,7 @@ gem 'rack-ssl-enforcer'
 gem 'rbnacl' # assumes libsodium package already installed
 
 group :development, :test do
+  gem 'rerun'
   gem 'rubocop'
   gem 'rubocop-performance'
-  gem 'rerun'
 end
