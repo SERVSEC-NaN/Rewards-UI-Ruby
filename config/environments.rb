@@ -39,7 +39,7 @@ module Rewards
           expire_after: ONE_MONTH,
           redis_server: {
             url: ENV.delete('REDIS_URL'),
-            ssl_params: { verify_mode: OpenSSL::SSL::VERIFY_NONE },
+            ssl_params: { verify_mode: OpenSSL::SSL::VERIFY_NONE }
           }
     end
 
