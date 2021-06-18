@@ -16,6 +16,29 @@ module Rewards
             routing.redirect '/auth/login'
           end
         end
+
+        routing.post String do |registration_token|
+          raise 'Passwords do not match or empty' if
+            routing.params['password'].empty? ||
+            routing.params['password'] != routing.params['password_confirm']
+
+          new_account = RegisterToken.payload(registration_token)
+          CreateAccount.new(App.config).call(
+            email: new_account['email'],
+            type: new_account['type'],
+            password: routing.params['password']
+          )
+          flash[:notice] = 'Account created! Please login'
+          routing.redirect '/auth/login'
+        rescue CreateAccount::InvalidAccount => e
+          flash[:error] = e.message
+          routing.redirect '/auth/register'
+        rescue StandardError => e
+          flash[:error] = e.message
+          routing.redirect(
+            "#{App.config.APP_URL}/auth/register/#{registration_token}"
+          )
+        end
       end
     end
   end
