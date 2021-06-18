@@ -20,7 +20,12 @@ module Rewards
             email: routing.params['email'],
             password: routing.params['password']
           )
-          SecureSession.new(session).set(:current_account, account)
+          current_account = CurrentAccount.new(
+            account[:account],
+            account[:auth_token]
+          )
+
+          CurrentSession.new(session).current_account = current_account
           flash[:notice] = "Welcome back #{account['email']}!"
           routing.redirect '/'
         rescue AuthenticateAccount::UnauthorizedError
@@ -31,10 +36,10 @@ module Rewards
       end
 
       # /auth/logout
-      @logout_route = '/auth/admin/logout'
+      @logout_route = '/auth/logout'
       routing.on 'logout' do
         routing.get do
-          SecureSession.new(session).delete(:current_account)
+          CurrentSession.new(session).delete
           flash[:notice] = 'Logged out successfully'
           routing.redirect @login_route
         end
