@@ -3,6 +3,7 @@
 require 'base64'
 require 'rbnacl'
 
+# Create secure message for safe communication between web app and web api
 class SecureMessage
   def self.encoded_random_bytes(length)
     bytes = RbNaCl::Random.random_bytes(length)
@@ -22,7 +23,7 @@ class SecureMessage
   end
 
   def self.encrypt(message)
-    return nill unless message
+    return nil unless message
 
     message_json = message.to_json
     simple_box = RbNaCl::SimpleBox.from_secret_key(key)
