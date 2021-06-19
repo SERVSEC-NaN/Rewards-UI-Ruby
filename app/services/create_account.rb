@@ -2,34 +2,28 @@
 
 require 'http'
 
-# Create an account using email and usertype
 module Rewards
+  # Create an account using email and usertype
   class CreateAccount
     class InvalidAccount < StandardError; end
 
     def initialize(config)
       @config = config
     end
-    
+
     def call(type:, email:, password:)
-      message = {
-        type: type,
-        email: email,
-        password: password
-      }
-      
-      if type == "subscriber"
-        response = HTTP.post(
-          "#{@config.API_URL}/subscriber/",
-          json: message
-        )
-        p "A subscriber is created!"
-      elsif type == "promoter"
-        response = HTTP.post(
-          "#{@config.API_URL}/promoter/",
-          json: message
-        )
-        p "A promoter is created!"
+      message = { type: type, email: email, password: password }
+      p type
+      case type
+      when 'subscriber'
+        response = HTTP.post("#{@config.API_URL}/subscribers/", json: message)
+        p message
+        p 'A subscriber is created!'
+      when 'promoter'
+        response = HTTP.post("#{@config.API_URL}/promoters/", json: message)
+        p 'A promoter is created!'
+      else
+        raise InvalidAccount
       end
       raise InvalidAccount unless response.code == 201
     end
