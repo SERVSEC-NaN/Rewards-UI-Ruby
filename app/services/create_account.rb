@@ -13,18 +13,7 @@ module Rewards
 
     def call(type:, email:, password:)
       message = { type: type, email: email, password: password }
-      p type
-      case type
-      when 'subscriber'
-        response = HTTP.post("#{@config.API_URL}/subscribers/", json: message)
-        p message
-        p 'A subscriber is created!'
-      when 'promoter'
-        response = HTTP.post("#{@config.API_URL}/promoters/", json: message)
-        p 'A promoter is created!'
-      else
-        raise InvalidAccount
-      end
+      response = HTTP.post("#{@config.API_URL}/accounts/", json: message)
       raise InvalidAccount unless response.code == 201
     end
   end
